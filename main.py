@@ -7,7 +7,13 @@ print(result)
 
 instanceThompson = Thompson(result)
 afnresult = instanceThompson.postfix_to_nfa()
+afnresult.transicionesToNum()
 afnresult.printAfn()
+print("  ")
+print(afnresult.transicionesNum)
+afnresult.draw_graph()
+
+
 
 
 

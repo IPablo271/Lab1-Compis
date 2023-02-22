@@ -1,0 +1,24 @@
+graph {
+	0
+	1
+	0 -- 1 [label=a]
+	6
+	1 -- 6 [label="ε"]
+	2
+	6 -- 2 [label="ε"]
+	4
+	6 -- 4 [label="ε"]
+	3
+	2 -- 3 [label=a]
+	5
+	4 -- 5 [label=b]
+	7
+	3 -- 7 [label="ε"]
+	5 -- 7 [label="ε"]
+	9
+	7 -- 9 [label="ε"]
+	7 -- 6 [label="ε"]
+	1 -- 9 [label="ε"]
+	11
+	9 -- 11 [label=b]
+}
