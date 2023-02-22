@@ -3,6 +3,26 @@
 class InfixToPostfix:
     def __init__(self,expression):
         self.expression = expression
+
+    def formatearExpresionRegular(self):
+        respuesta = ''
+        todosOperadores = set(["|", "*", "+", "?"])
+        operadoresBinarios = set(["|"])
+        for i in range(len(self.expression)):
+            caracter = self.expression[i]
+            if i + 1 < len(self.expression):
+                siguienteCaracter = self.expression[i + 1]
+                respuesta += caracter
+                if caracter != '(':
+                    if siguienteCaracter != ')':
+                        if siguienteCaracter not in todosOperadores:
+                            if caracter not in operadoresBinarios:
+                                respuesta += '.'
+
+        self.expression = respuesta + self.expression[-1]
+        return 1
+   
+
     def infix_to_postfix(self):
         precedence = {"|": 1, ".": 2, "*": 3}
         stack = []
