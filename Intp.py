@@ -1,13 +1,66 @@
 
-
+'''
+Universidad del valle de Guatemala
+Nombre: Pablo Gonzalez
+Carnet: 20362
+Proposito de clase: Esta clase tiene como proposito
+poder convertir una expresion infix to postfix y verificar
+si esta tiene error para poder procesar la informacion.
+'''
 class InfixToPostfix:
-    def __init__(self,expression):
+    def __init__(self,expression): #Constructor del programa
         self.expression = expression
+    
+    def valid_construction_regex(self): #Metodo para verificar que la expresion no tenga una de estas diferentes combinaciones imbalidas.
+        invalid_combinations = ['**', '+*', '*+', '(|', '|)', '||', '(.', '.)', '..', '++', '.+', '+.', '(*', '(+', '+)', '*)', '??']
+        #Check for invalid combinations
+        for i in invalid_combinations:
+            if i in self.expression:
+                index = self.expression.find(i)
+                raise Exception('La cadena cuenta con una combinacion de operadores invalida ')
+    
+    def null_regex(self): #Se verifica que la cadena no este vacia
+        if not self.expression:
+            raise Exception('La cadena esta vacia')
+        else:
+            return False
+    def verificar_parentesis(self): #Metodo para verificar que la cadena tenga la misma cantidad de parentesis cerrados que parentesis abiertos
+        contador = 0
 
-    def formatearExpresionRegular(self):
+        for caracter in self.expression:
+            if caracter == '(':
+                contador += 1
+            elif caracter == ')':
+                contador -= 1
+                if contador < 0:
+                    return False
+
+        if contador == 0:
+            return False
+        else:
+            raise Exception("La cadena tien una cantidad desbalandeada de parentesis")
+    def verificar_cadena(self): #Metodo para verificar que la cadena no empiece con un operador
+        operadores = [".","?","|","*","+"]
+        if self.expression[0] in operadores:
+            raise Exception("La cadena cuenta con un operador al inicio de la cadena")
+        else:
+            return False
+    
+
+    def validar_expresion_regular(self): #Metodo que unifica todos los posbles errore y retina 1 si no hay error
+        self.valid_construction_regex()
+        self.null_regex()
+        self.verificar_parentesis()
+        self.verificar_cadena()
+        return 1
+    
+
+    
+
+    def formatearExpresionRegular(self): #metodo para poder agregar puntos a la expresion
         respuesta = ''
-        todosOperadores = set(["|", "*", "+", "?"])
-        operadoresBinarios = set(["|"])
+        opera = set(["|", "*", "+", "?"])
+        operadb = set(["|"])
         for i in range(len(self.expression)):
             caracter = self.expression[i]
             if i + 1 < len(self.expression):
@@ -15,15 +68,15 @@ class InfixToPostfix:
                 respuesta += caracter
                 if caracter != '(':
                     if siguienteCaracter != ')':
-                        if siguienteCaracter not in todosOperadores:
-                            if caracter not in operadoresBinarios:
+                        if siguienteCaracter not in opera:
+                            if caracter not in operadb:
                                 respuesta += '.'
 
         self.expression = respuesta + self.expression[-1]
         return 1
    
 
-    def infix_to_postfix(self):
+    def infix_to_postfix(self): #Metodo que convierte el infix a postfix 
         precedence = {"|": 1, ".": 2, "*": 3}
         stack = []
         postfix = []

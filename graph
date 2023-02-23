@@ -1,57 +1,22 @@
-graph {
-	0
-	1
-	0 -- 1 [label=a]
+digraph {
 	4
-	1 -- 4 [label="ε"]
-	6
-	1 -- 6 [label="ε"]
+	0
+	4 -> 0 [label="ε" arrowhead=vee dir=forward]
 	2
-	4 -- 2 [label="ε"]
+	4 -> 2 [label="ε" arrowhead=vee dir=forward]
+	1
+	0 -> 1 [label=a arrowhead=vee dir=forward]
 	3
-	2 -- 3 [label=b]
+	2 -> 3 [label=b arrowhead=vee dir=forward]
 	5
-	3 -- 5 [label="ε"]
-	3 -- 2 [label="ε"]
-	4 -- 5 [label="ε"]
+	1 -> 5 [label="ε" arrowhead=vee dir=forward]
+	3 -> 5 [label="ε" arrowhead=vee dir=forward]
+	6
+	5 -> 6 [label="ε" arrowhead=vee dir=forward]
 	7
-	6 -- 7 [label=a]
+	6 -> 7 [label=b arrowhead=vee dir=forward]
 	9
-	5 -- 9 [label="ε"]
-	7 -- 9 [label="ε"]
-	10
-	9 -- 10 [label="ε"]
-	12
-	9 -- 12 [label="ε"]
-	11
-	10 -- 11 [label=b]
-	13
-	12 -- 13 [label="ε"]
-	15
-	11 -- 15 [label="ε"]
-	13 -- 15 [label="ε"]
-	16
-	15 -- 16 [label="ε"]
-	17
-	16 -- 17 [label=c]
-	17 -- 16 [label="ε"]
-	19
-	17 -- 19 [label="ε"]
-	24
-	19 -- 24 [label="ε"]
-	20
-	24 -- 20 [label="ε"]
-	22
-	24 -- 22 [label="ε"]
-	21
-	20 -- 21 [label=a]
-	23
-	22 -- 23 [label=b]
-	25
-	21 -- 25 [label="ε"]
-	23 -- 25 [label="ε"]
-	27
-	25 -- 27 [label="ε"]
-	25 -- 24 [label="ε"]
-	19 -- 27 [label="ε"]
+	7 -> 9 [label="ε" arrowhead=vee dir=forward]
+	7 -> 6 [label="ε" arrowhead=vee dir=forward]
+	5 -> 9 [label="ε" arrowhead=vee dir=forward]
 }
