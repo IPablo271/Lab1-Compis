@@ -40,7 +40,7 @@ class InfixToPostfix:
         else:
             raise Exception("La cadena tien una cantidad desbalandeada de parentesis")
     def verificar_cadena(self): #Metodo para verificar que la cadena no empiece con un operador
-        operadores = [".","?","|","*","+"]
+        operadores = [".","?","|","*","+",")"]
         if self.expression[0] in operadores:
             raise Exception("La cadena cuenta con un operador al inicio de la cadena")
         else:
