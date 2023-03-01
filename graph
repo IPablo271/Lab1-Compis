@@ -1,22 +1,7 @@
 digraph {
-	4
 	0
-	4 -> 0 [label="ε" arrowhead=vee dir=forward]
-	2
-	4 -> 2 [label="ε" arrowhead=vee dir=forward]
 	1
 	0 -> 1 [label=a arrowhead=vee dir=forward]
 	3
-	2 -> 3 [label=b arrowhead=vee dir=forward]
-	5
-	1 -> 5 [label="ε" arrowhead=vee dir=forward]
-	3 -> 5 [label="ε" arrowhead=vee dir=forward]
-	6
-	5 -> 6 [label="ε" arrowhead=vee dir=forward]
-	7
-	6 -> 7 [label=b arrowhead=vee dir=forward]
-	9
-	7 -> 9 [label="ε" arrowhead=vee dir=forward]
-	7 -> 6 [label="ε" arrowhead=vee dir=forward]
-	5 -> 9 [label="ε" arrowhead=vee dir=forward]
+	1 -> 3 [label="@" arrowhead=vee dir=forward]
 }

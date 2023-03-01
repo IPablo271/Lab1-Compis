@@ -12,7 +12,7 @@ class InfixToPostfix:
         self.expression = expression
     
     def valid_construction_regex(self): #Metodo para verificar que la expresion no tenga una de estas diferentes combinaciones imbalidas.
-        invalid_combinations = ['**', '+*', '*+', '(|', '|)', '||', '(.', '.)', '..', '++', '.+', '+.', '(*', '(+', '+)', '*)', '??']
+        invalid_combinations = ['**', '+*', '*+', '(|', '|)', '||', '(.', '.)', '..', '++', '.+', '+.', '(*', '(+', '+)', '??']
         #Check for invalid combinations
         for i in invalid_combinations:
             if i in self.expression:
@@ -38,7 +38,7 @@ class InfixToPostfix:
         if contador == 0:
             return False
         else:
-            raise Exception("La cadena tien una cantidad desbalandeada de parentesis")
+            raise Exception("La cadena tien una cantidad desbalanceada de parentesis")
     def verificar_cadena(self): #Metodo para verificar que la cadena no empiece con un operador
         operadores = [".","?","|","*","+",")"]
         if self.expression[0] in operadores:

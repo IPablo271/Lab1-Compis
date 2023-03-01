@@ -4,7 +4,7 @@ from Thompson import *
 #Se importan las libreiras necesaria
 
 
-ift = InfixToPostfix(")a(*") #Se crea la instacia del analizador 
+ift = InfixToPostfix("") #Se crea la instacia del analizador 
 ift.validar_expresion_regular() #Se verifica que la expresion regular cumpla con los parametros
 ift.formatearExpresionRegular() #Se agregan puntos a la expersion
 print(ift.expression)
