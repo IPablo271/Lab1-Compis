@@ -15,6 +15,6 @@ class Transicion:
         self.estadofinal = nodo2
         self.dato = dato
 
-    def __str__(self): #Metodo para imprimir ela transicion
-        print("estado inicial: " +str(self.izquierda.id) +" estado final "+str(self.derecha) +" Dato: "+str(self.dato))
+    def print_transicion(self): #Metodo para imprimir ela transicion
+        print("estado inicial: " +str(self.estadoinicial.id) +" estado final "+str(self.estadofinal.id) +" Dato: "+str(self.dato))
 

@@ -14,12 +14,14 @@ from Afn import *
 class Thompson:
     def __init__(self,expresion): #Metdoo de constructor
         self.expresion = expresion #Expression en postfix del regex 
+        self.listaNodos = []
         self.Dfa = None #Variable para alamcenar el anf final
     
     def simbolo(self,simbolo): #Funcion que devuelve un afn  1 por media de a -> 2
         nodo1 = Nodo() 
         nodo2 = Nodo() #Se crean los dos nodos a utlizar
         Transiciontemp = Transicion(nodo1,simbolo,nodo2) #Se crea la transicion del nodo1 al nodo 2 por medio de simbolo ingresado
+        nodo1.add_transicion(Transiciontemp)
         afntemp = AFN() #Se crea un afn temporal para almacenar la informacion
         afntemp.add_transicion(Transiciontemp) #Se agrega las transicones
         return afntemp #Se retorna el afn
@@ -31,6 +33,8 @@ class Thompson:
         Transiciontemp1 = Transicion(nodo1,"ε",afn1.transiciones[0].estadoinicial)
         Transiciontemp2 = Transicion(nodo1,"ε",afn2.transiciones[0].estadoinicial)
         #Se realizan dos transiciones una con nodo inicial del afn1 con epsilon y otra con el nodoinicial del afn2 las dos dirijidas al primer nodo creado
+        nodo1.add_transicion(Transiciontemp1)
+        nodo1.add_transicion(Transiciontemp2)
 
         afntemp.add_transicion(Transiciontemp1)
         afntemp.add_transicion(Transiciontemp2)
@@ -43,12 +47,19 @@ class Thompson:
         # Se agregan el restro de transiciones
 
         #Se realizan dos transiciones una con nodo final del afn1 con epsilon y otra con el nodo final del afn2 las dos dirijidas al segundo nodo creado
+
+        nodotemp = afn1.transiciones[-1].estadofinal
+        noodtemp2 = afn2.transiciones[-1].estadofinal
+
         Transiciontemp3 = Transicion(afn1.transiciones[-1].estadofinal,"ε",nodo2)
         Transiciontemp4 = Transicion(afn2.transiciones[-1].estadofinal,"ε",nodo2)
 
         afntemp.add_transicion(Transiciontemp3)
         afntemp.add_transicion(Transiciontemp4)
         #Se agren las dos transiciones temporales
+
+        nodotemp.add_transicion(Transiciontemp3)
+        noodtemp2.add_transicion(Transiciontemp4)
 
         return afntemp #Se retorna el afn nuevo
     
@@ -57,6 +68,7 @@ class Thompson:
         nodo1 = Nodo()
         nodo2 = Nodo() #Se crean los dos nodos a utlizar
         Transiciontemp1 = Transicion(nodo1,"ε",afn1.transiciones[0].estadoinicial)
+        nodo1.add_transicion(Transiciontemp1)
         #Se crea una transicion desde el nodo1 hacia el nodo inicial del afn por medio de epsilon
         afntemp.add_transicion(Transiciontemp1)
         #Se crea la transicion 
@@ -65,12 +77,17 @@ class Thompson:
             afntemp.add_transicion(transicion)
         #Se agregan todas las transiciones del afn que se paso como paarmetro
 
+        nodotemp1 = afn1.transiciones[-1].estadofinal
+
         Transiciontemp2 = Transicion(afn1.transiciones[-1].estadofinal,"ε",nodo2)
         #Se crea una transicion desde el nodo fianl del afn hacia el nodo 2 por medio de epsilon
         Transiciontemp3 = Transicion(afn1.transiciones[-1].estadofinal,"ε",afn1.transiciones[0].estadoinicial)
         #Se crea una transicion desde el nodo fianl del afn hacia el nodo inicial del afn por medio de epsilon
         Transiciontemp4 = Transicion(nodo1,"ε", nodo2)
         #Se crea una transicion desde el nodo1 del afn hacia el nodo2  del afn por medio de epsilon
+        nodotemp1.add_transicion(Transiciontemp2)
+        nodotemp1.add_transicion(Transiciontemp3)
+        nodo1.add_transicion(Transiciontemp4)
 
         afntemp.add_transicion(Transiciontemp2)
         afntemp.add_transicion(Transiciontemp3)
@@ -90,10 +107,15 @@ class Thompson:
         for transicion in afn2.transiciones: #Se recorre afd2
             if(transicion.estadoinicial == estadInicialAFN2): #Se verifica si el estado inciial de la transicion es igua al estado inciial del afn2
                 transicion.estadoinicial = estadofinalAFN1 #Si es igual la transicion se vuelve el estado final del afn1 para hacer la concatenacion
+
         
         #Se agregan las transicones
         for transicion in afn2.transiciones:
             afntemp.add_transicion(transicion)
+        
+        lasttransicion = afntemp.transiciones[-1]
+        nodoinicial = lasttransicion.estadoinicial
+        nodoinicial.add_transicion(lasttransicion)
         
         #Se retorna el afd
         return afntemp
@@ -102,6 +124,8 @@ class Thompson:
         nodo1 = Nodo()
         nodo2 = Nodo() #Se crean los dos nodos a utlizar
         Transiciontemp1 = Transicion(nodo1,"ε",afn1.transiciones[0].estadoinicial)
+        nodo1.add_transicion(Transiciontemp1)
+
         #Se crea una transicion desde el nodo1 hacia el nodo inicial del afn por medio de epsilon
         afntemp.add_transicion(Transiciontemp1)
         #Se agrega la trannsiicon
@@ -112,13 +136,16 @@ class Thompson:
         #Se agregan todas las transiciones del afn que se paso como paarmetro
                 
 
-       
+        nodotemp = afn1.transiciones[-1].estadofinal
+
         Transiciontemp3 = Transicion(afn1.transiciones[-1].estadofinal,"ε",afn1.transiciones[0].estadoinicial)
         #Se crea una transicion desde el nodo fianl del afn hacia el nodo inicial del afn por medio de epsilon
         Transiciontemp2 = Transicion(afn1.transiciones[-1].estadofinal,"ε",nodo2)
         #Se crea una transicion desde el nodo fianl del afn hacia el nodo 2 por medio de epsilon
         afntemp.add_transicion(Transiciontemp3)
         afntemp.add_transicion(Transiciontemp2)
+        nodotemp.add_transicion(Transiciontemp3)
+        nodotemp.add_transicion(Transiciontemp2)
         #Se agregan las nuevas transicones al afn
 
         return afntemp #Se retorna el afn 

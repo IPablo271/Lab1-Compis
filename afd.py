@@ -8,10 +8,9 @@ diferentes transiciones y dibujarse a si mismo en un formato de
 png
 '''
 import graphviz
-class AFN:
+class AFD:
     def __init__(self): #Constructor de la clase
         self.transiciones = []
-        self.nodes = []
         self.transicionesNum = []
     
 
@@ -32,22 +31,6 @@ class AFN:
             lista.append(dato)
             lista.append(nodo2)
             self.transicionesNum.append(lista)
-    def add_nodes(self):
-        for transicion in self.transiciones:
-            nodo1 = transicion.estadoinicial
-            nodo2 = transicion.estadofinal
-            if nodo1 not in self.nodes:
-                self.nodes.append(nodo1)
-            if nodo2 not in self.nodes:
-                self.nodes.append(nodo2)
-    
-    def print_movimientos_nodo(self):
-        for nodo in self.nodes:
-            print("Nodo: "+str(nodo.id))
-            for transicion in nodo.transiciones:
-                print(str(transicion.estadoinicial.id) +" "+str(transicion.dato) +" "+str(transicion.estadofinal.id))
-
-        
     def draw_graph(self): #Metodo para dibujar el digrafo con la liberia graphviz
         g = graphviz.Digraph()  
         nodes = []
@@ -64,7 +47,4 @@ class AFN:
             g.edge(str(src), str(dest), label=label, dir='forward', arrowhead='vee') 
         g.format = 'png'
         g.render('graph')
-    
-
-
 

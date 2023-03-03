@@ -53,8 +53,8 @@ class InfixToPostfix:
         self.verificar_parentesis()
         self.verificar_cadena()
         return 1
-    
-
+    def extension_cadena(self):
+        self.expression = self.expression + "#"
     
 
     def formatearExpresionRegular(self): #metodo para poder agregar puntos a la expresion
