@@ -40,6 +40,10 @@ class AFN:
                 self.nodes.append(nodo1)
             if nodo2 not in self.nodes:
                 self.nodes.append(nodo2)
+    def add_nodes_transiciones(self):
+        for transicion in self.transiciones:
+            nodo1 = transicion.estadoinicial
+            nodo1.add_transicion(transicion)
     
     def print_movimientos_nodo(self):
         for nodo in self.nodes:
@@ -49,7 +53,7 @@ class AFN:
 
         
     def draw_graph(self): #Metodo para dibujar el digrafo con la liberia graphviz
-        g = graphviz.Digraph()  
+        g = graphviz.Digraph(graph_attr={'rankdir': 'LR'})  
         nodes = []
         for edge in self.transicionesNum:
             src = edge[0]
@@ -63,7 +67,7 @@ class AFN:
                 nodes.append(dest)
             g.edge(str(src), str(dest), label=label, dir='forward', arrowhead='vee') 
         g.format = 'png'
-        g.render('graph')
+        g.render('afn')
     
 
 

@@ -1,4 +1,5 @@
 digraph {
+	graph [rankdir=LR]
 	6
 	4
 	6 -> 4 [label="ε" arrowhead=vee dir=forward]

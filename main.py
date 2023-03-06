@@ -5,7 +5,7 @@ from subconjuntos import *
 #Se importan las libreiras necesaria
 
 
-ift = InfixToPostfix("(a|b)*abb") #Se crea la instacia del analizador 
+ift = InfixToPostfix("aa(a|b)*(b|a)bbb") #Se crea la instacia del analizador 
 ift.validar_expresion_regular() #Se verifica que la expresion regular cumpla con los parametros
 ift.formatearExpresionRegular() #Se agregan puntos a la expersion
 print(ift.expression)
@@ -17,22 +17,15 @@ afnresult.transicionesToNum() #Se crea una lista de las transiciones para poder 
 #afnresult.printAfn() #Se imprime el afn con con sus transiciones
 
 afnresult.add_nodes()
+afnresult.add_nodes_transiciones()
 
 
 instanceSubcojuntos = Subconjuntos(afnresult)
 
-listai = []
-listai.append(instanceSubcojuntos.nodos_afd[0])
-
-subconjunto1 = instanceSubcojuntos.eclousere(listai)
+instanceSubcojuntos.construccion_subconjuntos()
+instanceSubcojuntos.draw_afd()
 
 
-
-mover_a = instanceSubcojuntos.mover(subconjunto1,"a")
-mover_b = instanceSubcojuntos.mover(subconjunto1,"b")
-
-subconjunto2 = instanceSubcojuntos.eclousere(mover_a)
-subconjunto3 = instanceSubcojuntos.eclousere(mover_b)
 
 afnresult.draw_graph() #Se dibuja el afn
 
