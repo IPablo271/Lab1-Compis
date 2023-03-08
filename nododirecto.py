@@ -21,6 +21,7 @@ class Nododir:
         self.nullable = None
         self.firstPos = []
         self.lastPos = []
+        self.followPos = []
     
     def add_nodos(self,nodo):
         self.nodos.append(nodo)

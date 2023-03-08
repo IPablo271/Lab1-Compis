@@ -56,7 +56,10 @@ while salir == False:
         resultado = ift.infix_to_postfix()
         instancedirecta = Directa(resultado)
         instancedirecta.construccion_arbol()
-        instancedirecta.print_arbol()
+        #instancedirecta.print_arbol()
+        instancedirecta.construccion_directo()
+        
+        
     
 
 

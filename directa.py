@@ -3,7 +3,14 @@ class Directa:
     def __init__(self,expression):
         self.expression = expression
         self.arbol = None
+        self.nodos_letra = []
+        self.id_letra = []
+        self.followpos_arbol = []
+        self.nodo_followpos = []
         self.lista_transiciones = []
+        self.tabla_final = []
+        self.datos = []
+
     
     def isOperator(self,caracter): #Metodo para verificar si es un operador
         return caracter == "*" or caracter =="." or caracter == "|" or caracter =="+" or caracter =="?"
@@ -38,6 +45,7 @@ class Directa:
                         self.nullable(nodotemp)
                         self.first_pos(nodotemp)
                         self.last_pos(nodotemp)
+                        self.followpos(nodotemp)
                         stack.append(nodotemp)
                     elif caracter == "|":
                         nodotemp = Nododir(caracter,izquierda=nodo1,derecha=nodo2)
@@ -60,6 +68,7 @@ class Directa:
                         self.nullable(nodotemp)
                         self.first_pos(nodotemp)
                         self.last_pos(nodotemp)
+                        self.followpos(nodotemp)
                         stack.append(nodotemp)
         
         self.arbol = stack[0]
@@ -136,6 +145,117 @@ class Directa:
             elif nodo.dato == "*":
                 nodo.lastPos = nodo.enmedio.lastPos
 
+
+        
+    def followpos(self,nodo):
+        if nodo.dato == '.':
+            lista = []
+            for dato in nodo.izquierda.lastPos:
+                diccionario = {}
+                nodoprimera = nodo.derecha.firstPos
+                diccionario[dato] = nodoprimera
+                lista.append(diccionario)
+        
+            nodo.followPos = lista
+            self.followpos_arbol.append(lista)
+
+        elif nodo.dato == '*':
+            lista = []
+            for dato in nodo.enmedio.lastPos:
+                diccionario = {}
+                nodoprimera = nodo.enmedio.firstPos
+                diccionario[dato] = nodoprimera
+                lista.append(diccionario)
+
+            nodo.followPos = lista
+            self.followpos_arbol.append(lista)
+
+    def construccion_tabla(self):
+        for nodo in self.arbol.nodos:
+            diccionario = {}
+            if not self.isOperator(nodo.dato):
+                self.nodos_letra.append(nodo)
+                diccionario[nodo.id] = nodo.dato
+                self.id_letra.append(diccionario)
+
+            else:
+                pass
+
+    def print_followpos(self):
+        print(self.followpos_arbol)
+    
+    def unify_values(self, key):
+        result = {}
+        for dict_list in self.followpos_arbol:
+            for item in dict_list:
+                for k, v in item.items():
+                    if k == key:
+                        result.setdefault(k, []).extend(v)
+        if key not in result:
+            result[key] = []
+
+        return [{k: v} for k, v in result.items()]
+    
+    def construccion_nodofollowpos(self):
+        for dict_item in self.id_letra:
+            for key in dict_item.keys():
+                lista = self.unify_values(key)
+                self.nodo_followpos.append(lista[0])
+
+    
+    def construcion_tablafinal(self):
+        self.construccion_tabla()
+        self.construccion_nodofollowpos()
+        keys = [clave for diccionario in self.id_letra for clave in diccionario.keys()]
+        keys.sort()
+        for i in range(len(self.nodo_followpos)):
+            lista = []
+            id_nodo = keys[i]
+            dic = self.id_letra[i]
+            dic2 = self.nodo_followpos[i]
+            val1 = dic[id_nodo]
+            val2 = dic2[id_nodo]
+            lista.append(id_nodo)
+            lista.append(val1)
+            lista.append(val2)
+            self.tabla_final.append(lista)
+
+        print(self.tabla_final)
+
+    def agregarcaracteres(self):
+        for caracter in self.expression:
+            if not self.isOperator(caracter):
+                if caracter not in self.datos and caracter !="ε" and caracter !="#":
+                    self.datos.append(caracter)
+            else:
+                pass
+
+    def construccion_directo(self):
+        self.construcion_tablafinal()
+        estados_marcados = []
+        estados_creados = {}
+        lista_transiciones = []
+        diccionario = {}
+        self.agregarcaracteres()
+        print(self.datos)
+
+
+        
+
+
+
+
+            
+            
+
+    
+
+    
+    
+
+
+            
+        
     def print_arbol(self):
         a = self.arbol.nodos
         rev = list(reversed(a))
@@ -166,6 +286,10 @@ class Directa:
                  print("El resultado de lastpos para el nodo es: "+str(nodo.lastPos))
             else:
                 print("Nodo sin lastpos")
+            if nodo.followPos is not None:
+                 print("El resultado de followpos para el nodo es: "+str(nodo.followPos))
+            else:
+                print("Nodo sin followpos")
 
 
             
