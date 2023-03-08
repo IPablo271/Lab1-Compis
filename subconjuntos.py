@@ -119,11 +119,7 @@ class Subconjuntos:
                     estado_temp = self.mover(estado,letra)
                    
                     estado_temp_result = self.eclousere(estado_temp)
-                    # print("Estado resultado del mov: "+str(self.estados_nodos_to_num(estado_temp)))
-                    # print("Estado donde va: "+str(self.estados_nodos_to_num(estado)))
-                    # print("Letra del estado: "+str(letra))
-                    # print("Estado resultante: "+str(self.estados_nodos_to_num(estado_temp_result)))
-                    # print("  ")
+                   
 
                     lista_temp2.append(self.estados_nodos_to_num(estado))
                     lista_temp2.append(letra)
@@ -155,7 +151,7 @@ class Subconjuntos:
         
         self.afn = unique_listaf
 
-        return listafinal
+        return unique_listaf
     
     def draw_afd(self): #Metodo para dibujar el digrafo con la liberia graphviz
         g = graphviz.Digraph(graph_attr={'rankdir': 'LR'})  

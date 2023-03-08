@@ -1,4 +1,5 @@
 from nododirecto import *
+import graphviz
 class Directa:
     def __init__(self,expression):
         self.expression = expression
@@ -10,6 +11,8 @@ class Directa:
         self.lista_transiciones = []
         self.tabla_final = []
         self.datos = []
+        self.estados_cojuntos = []
+        self.afn = None
 
     
     def isOperator(self,caracter): #Metodo para verificar si es un operador
@@ -180,9 +183,6 @@ class Directa:
 
             else:
                 pass
-
-    def print_followpos(self):
-        print(self.followpos_arbol)
     
     def unify_values(self, key):
         result = {}
@@ -220,7 +220,6 @@ class Directa:
             lista.append(val2)
             self.tabla_final.append(lista)
 
-        print(self.tabla_final)
 
     def agregarcaracteres(self):
         for caracter in self.expression:
@@ -230,31 +229,94 @@ class Directa:
             else:
                 pass
 
+    def unirestados(self,estados,letra):
+        estadosunion = []
+        for estado in estados:
+            for lista in self.tabla_final:
+                if lista[0] == estado and lista[1] == letra:
+                    estadosunion = estadosunion + lista[2]
+
+        return estadosunion
+    
+    def buscar_llave(self,diccionario, valor_buscado):
+        for llave, valor in diccionario.items():
+            if valor == valor_buscado:
+                return llave
+        return None
+
     def construccion_directo(self):
         self.construcion_tablafinal()
         estados_marcados = []
-        estados_creados = {}
-        lista_transiciones = []
+        estados_creados = 0
+        lista_conneciones = []
         diccionario = {}
         self.agregarcaracteres()
-        print(self.datos)
+        estado1 = self.tabla_final[0][2]
+        diccionario[estados_creados] = estado1
 
+        for letra in self.datos:
+            lista_temp = []
+            estadoresult = self.unirestados(estado1,letra)
+            lista_temp.append(estado1)
+            lista_temp.append(letra)
+            lista_temp.append(estadoresult)
+            lista_conneciones.append(lista_temp)
 
+            if estadoresult not in self.estados_cojuntos:
+                self.estados_cojuntos.append(estadoresult)
+                estados_creados += 1
+                diccionario[estados_creados] = estadoresult
         
+        estados_marcados.append(estado1)
 
-
-
-
-            
-            
-
-    
-
-    
-    
-
-
-            
+        for estado in self.estados_cojuntos:
+            if estado not in estados_marcados:
+                estados_marcados.append(estado)
+                for letra in self.datos:
+                    listatemp2 = []
+                    estado_temp = self.unirestados(estado,letra)
+                    listatemp2.append(estado)
+                    listatemp2.append(letra)
+                    listatemp2.append(estado_temp)
+                    lista_conneciones.append(listatemp2)
+                    if estado_temp not in self.estados_cojuntos:
+                        self.estados_cojuntos.append(estado_temp)
+                        estados_creados += 1
+                        diccionario[estados_creados] = estado_temp
+        
+        listafinal = []
+        for lista in lista_conneciones:
+            lista_temp_f = []
+            llave = self.buscar_llave(diccionario,lista[0])
+            dato = lista[1]
+            llave2 = self.buscar_llave(diccionario,lista[2])
+            lista_temp_f.append(llave)
+            lista_temp_f.append(dato)
+            lista_temp_f.append(llave2)
+            listafinal.append(lista_temp_f)
+        
+        unique_listaf = []
+        for lista in listafinal:
+            if lista not in unique_listaf:
+                unique_listaf.append(lista)
+        
+        self.afn = unique_listaf
+    def draw_afd(self): #Metodo para dibujar el digrafo con la liberia graphviz
+        g = graphviz.Digraph(graph_attr={'rankdir': 'LR'})  
+        nodes = []
+        for edge in self.afn:
+            src = edge[0]
+            dest = edge[2]
+            label = edge[1]
+            if src not in nodes:
+                g.node(str(src))
+                nodes.append(src)
+            if dest not in nodes:
+                g.node(str(dest))
+                nodes.append(dest)
+            g.edge(str(src), str(dest), label=label, dir='forward', arrowhead='vee') 
+        g.format = 'png'
+        g.render('afd_directo') 
         
     def print_arbol(self):
         a = self.arbol.nodos

@@ -48,7 +48,7 @@ while salir == False:
         instanceSubcojuntos.draw_afd()
     
     elif opc == "3":
-        # expresion = input("Ingrese la expresion regular: ")
+        #expresion = input("Ingrese la expresion regular: ")
         ift = InfixToPostfix("(a|b)*abb") #Se crea la instacia del analizador 
         ift.validar_expresion_regular() #Se verifica que la expresion regular cumpla con los parametros
         ift.extension_cadena()
@@ -58,6 +58,7 @@ while salir == False:
         instancedirecta.construccion_arbol()
         #instancedirecta.print_arbol()
         instancedirecta.construccion_directo()
+        instancedirecta.draw_afd()
         
         
     
