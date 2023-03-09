@@ -75,6 +75,37 @@ class InfixToPostfix:
 
         self.expression = respuesta + self.expression[-1]
         return 1
+    def getExpression(self):
+        # modificamos el regex para que no tenga ?
+        if '?' in self.expression:
+            self.expression = self.expression.replace('?', '|ε')
+            self.expression = self.expression.replace('.|ε', '|ε.')
+            parts = self.expression.split('.')
+            for i in range(len(parts)):
+                if '|ε' in parts[i]:
+                    parts[i] = f"({parts[i]})"
+            self.expression = ".".join(parts)
+
+        # modificamos el regex para que no tenga +
+        if '+' in self.expression:
+            parts = self.expression.split('.')
+            new_parts = []
+            for i, part in enumerate(parts):
+                if '+' in part:
+                    if '(' in part and ')' in part and part.index('(') < part.index('+') < part.index(')'):
+                        subparts = part[part.index(
+                            '(') + 1:part.index(')')].split('+')
+                        new_part = f"({subparts[0]}.{subparts[0]}*)"
+                        new_parts.append(new_part)
+                    else:
+                        subparts = part.split('+')
+                        new_part = f"{subparts[0]}.{subparts[0]}*"
+                        new_parts.append(new_part)
+                else:
+                    new_parts.append(part)
+            self.expression = ".".join(new_parts)
+
+        return self.expression
    
 
     def infix_to_postfix(self): #Metodo que convierte el infix a postfix 

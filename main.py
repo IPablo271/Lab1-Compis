@@ -49,11 +49,13 @@ while salir == False:
     
     elif opc == "3":
         #expresion = input("Ingrese la expresion regular: ")
-        ift = InfixToPostfix("(a|b)*abb") #Se crea la instacia del analizador 
+        ift = InfixToPostfix("(a|b)+abc?") #Se crea la instacia del analizador 
         ift.validar_expresion_regular() #Se verifica que la expresion regular cumpla con los parametros
         ift.extension_cadena()
         ift.formatearExpresionRegular() #Se agregan puntos a la expersion
+        ift.getExpression()
         resultado = ift.infix_to_postfix()
+        print(resultado)
         instancedirecta = Directa(resultado)
         instancedirecta.construccion_arbol()
         #instancedirecta.print_arbol()
