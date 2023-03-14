@@ -13,6 +13,8 @@ class Directa:
         self.datos = []
         self.estados_cojuntos = []
         self.afn = None
+        self.afn_estados = None
+        self.max = []
 
     
     def isOperator(self,caracter): #Metodo para verificar si es un operador
@@ -21,6 +23,12 @@ class Directa:
     def print_posciciones_arol(self):
         for nodo in self.arbol.nodos:
             print(nodo.id)
+            print(nodo.dato)
+    
+    def get_primer_nodo(self):
+        nodo = self.arbol.nodos[-1]
+        return nodo.firstPos
+    
     
     def construccion_arbol(self):
         stack = []
@@ -243,6 +251,25 @@ class Directa:
             if valor == valor_buscado:
                 return llave
         return None
+    def encontrar_max(self):
+        maximo = float('-inf')
+        for sublista in self.afn:
+            for numero in sublista:
+                if isinstance(numero, int) and numero > maximo:
+                    maximo = numero
+
+        self.max.append(int(maximo))
+
+        return maximo
+    def encontrar_numeros(self):
+        numeros = set()
+        for sublista in self.afn:
+            for elemento in sublista:
+                if isinstance(elemento, int):
+                    numeros.add(elemento)
+        
+        self.afn_estados = list(numeros)
+        return list(numeros)
 
     def construccion_directo(self):
         self.construcion_tablafinal()
@@ -251,7 +278,7 @@ class Directa:
         lista_conneciones = []
         diccionario = {}
         self.agregarcaracteres()
-        estado1 = self.tabla_final[0][2]
+        estado1 = self.get_primer_nodo()
         diccionario[estados_creados] = estado1
 
         for letra in self.datos:
@@ -260,7 +287,8 @@ class Directa:
             lista_temp.append(estado1)
             lista_temp.append(letra)
             lista_temp.append(estadoresult)
-            lista_conneciones.append(lista_temp)
+            if len(estadoresult) > 0:
+                lista_conneciones.append(lista_temp)
 
             if estadoresult not in self.estados_cojuntos:
                 self.estados_cojuntos.append(estadoresult)
@@ -278,12 +306,14 @@ class Directa:
                     listatemp2.append(estado)
                     listatemp2.append(letra)
                     listatemp2.append(estado_temp)
-                    lista_conneciones.append(listatemp2)
+                    if len(estado_temp) > 0:
+                        lista_conneciones.append(listatemp2)
                     if estado_temp not in self.estados_cojuntos:
                         self.estados_cojuntos.append(estado_temp)
                         estados_creados += 1
                         diccionario[estados_creados] = estado_temp
-        
+
+       
         listafinal = []
         for lista in lista_conneciones:
             lista_temp_f = []
@@ -301,6 +331,12 @@ class Directa:
                 unique_listaf.append(lista)
         
         self.afn = unique_listaf
+
+        self.encontrar_max()
+        self.encontrar_numeros()
+        print(self.afn_estados)
+        print(self.max)
+        return unique_listaf
     def draw_afd(self): #Metodo para dibujar el digrafo con la liberia graphviz
         g = graphviz.Digraph(graph_attr={'rankdir': 'LR'})  
         nodes = []
