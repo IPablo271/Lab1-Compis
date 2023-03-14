@@ -13,6 +13,21 @@ class AFN:
         self.transiciones = []
         self.nodes = []
         self.transicionesNum = []
+        self.nodosfinales_afn = []
+       
+    
+    def nodofinal(self):
+        self.add_nodes()
+        lsitatemp = []
+        for nodo in self.nodes:
+            lsitatemp.append(nodo.id)
+        
+        maximo = max(lsitatemp)
+        self.nodosfinales_afn.append(maximo)
+        return maximo
+    
+            
+
     
 
     def add_transicion(self,transicion): #Se agrega una transicion al grafo
@@ -32,6 +47,7 @@ class AFN:
             lista.append(dato)
             lista.append(nodo2)
             self.transicionesNum.append(lista)
+       
     def add_nodes(self):
         for transicion in self.transiciones:
             nodo1 = transicion.estadoinicial

@@ -4,6 +4,10 @@ class Subconjuntos:
         self.afd = afd
         self.nodos_afd = afd.nodes
         self.afn = None
+        self.nodof_afd = None
+        self.nodosfinales_afd = []
+        self.nodos_no_finales_afd = []
+        self.afd.estados = []
         self.estados_conjuntos_num = []
         self.estados_conjuntos = []
         self.datos = []
@@ -17,8 +21,28 @@ class Subconjuntos:
                 self.datos.append(transicion.dato)
             else:
                 pass
-    
+    def encontrar_max(self):
+        nodos = []
+        for nodo in self.nodos_afd:
+            nodos.append(nodo.id)
+        maximo = max(nodos)
+        self.nodof_afd = maximo
+        return maximo
+    def seprar_nodos(self,diccionario):
+        lista_keys = []
+        lista_nodos_n = []
+        for key, lista_valores in diccionario.items():
+            if self.nodof_afd in lista_valores:
+                lista_keys.append(key)
+            else:
+                lista_nodos_n.append(key)
+        
 
+
+        self.nodos_no_finales_afd = lista_nodos_n
+        self.nodosfinales_afd = lista_keys
+        return lista_keys
+    
     
     def eclousere(self,estados):
         estados_temp = []
@@ -72,6 +96,7 @@ class Subconjuntos:
         return None
 
     def construccion_subconjuntos(self):
+        self.encontrar_max()
         estados_marcados = []
         diccionario = {}
         lista_conecciones = []
@@ -131,6 +156,11 @@ class Subconjuntos:
                         estadi_num_temp = self.estados_nodos_to_num(estado_temp_result)
                         diccionario[estados_creados] = estadi_num_temp
         
+        
+
+        self.seprar_nodos(diccionario)
+        
+
         listafinal = []
         for lista in lista_conecciones:
             lista_temp_f = []

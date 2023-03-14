@@ -13,8 +13,8 @@ class Directa:
         self.datos = []
         self.estados_cojuntos = []
         self.afn = None
-        self.afn_estados = None
-        self.max = []
+        self.nodos_no_finales_afd = None
+        self.nodosfinales_afd = []
 
     
     def isOperator(self,caracter): #Metodo para verificar si es un operador
@@ -258,7 +258,9 @@ class Directa:
                 if isinstance(numero, int) and numero > maximo:
                     maximo = numero
 
-        self.max.append(int(maximo))
+        self.nodos_no_finales_afd.remove(int(maximo))
+
+        self.nodosfinales_afd.append(int(maximo))
 
         return maximo
     def encontrar_numeros(self):
@@ -268,7 +270,7 @@ class Directa:
                 if isinstance(elemento, int):
                     numeros.add(elemento)
         
-        self.afn_estados = list(numeros)
+        self.nodos_no_finales_afd = list(numeros)
         return list(numeros)
 
     def construccion_directo(self):
@@ -331,11 +333,10 @@ class Directa:
                 unique_listaf.append(lista)
         
         self.afn = unique_listaf
-
-        self.encontrar_max()
         self.encontrar_numeros()
-        print(self.afn_estados)
-        print(self.max)
+        self.encontrar_max()
+        
+        
         return unique_listaf
     def draw_afd(self): #Metodo para dibujar el digrafo con la liberia graphviz
         g = graphviz.Digraph(graph_attr={'rankdir': 'LR'})  
