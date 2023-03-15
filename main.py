@@ -81,6 +81,7 @@ while salir == False:
         instanceSubcojuntos.construccion_subconjuntos()
         instanceminimizacion = Minimizacion(instanceSubcojuntos)
         instanceminimizacion.minimizacion_afd()
+        
 
         
         # ift = InfixToPostfix(expresion) #Se crea la instacia del analizador 
