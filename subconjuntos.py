@@ -41,7 +41,14 @@ class Subconjuntos:
 
         self.nodos_no_finales_afd = lista_nodos_n
         self.nodosfinales_afd = lista_keys
+
         return lista_keys
+    def find_estado_error(self,d):
+        for k, v in d.items():
+            if not v:  # si la lista es vacía
+                return k
+        return None 
+
     
     
     def eclousere(self,estados):
@@ -134,6 +141,7 @@ class Subconjuntos:
                 
         
         estados_marcados.append(estado1)
+       
         
         for estado in self.estados_conjuntos:
             
@@ -159,6 +167,9 @@ class Subconjuntos:
         
 
         self.seprar_nodos(diccionario)
+        estado_error = self.find_estado_error(diccionario)
+        if estado_error != None:
+            self.nodos_no_finales_afd.remove(estado_error)
         
 
         listafinal = []
@@ -167,11 +178,13 @@ class Subconjuntos:
             llave = self.buscar_llave(diccionario,lista[0])
             dato = lista[1]
             llave2 = self.buscar_llave(diccionario,lista[2])
-            lista_temp_f.append(llave)
-            lista_temp_f.append(dato)
-            lista_temp_f.append(llave2)
-            listafinal.append(lista_temp_f)
-        
+
+            if len(lista[0]) > 0 and len(lista[2]) >0:
+                lista_temp_f.append(llave)
+                lista_temp_f.append(dato)
+                lista_temp_f.append(llave2)
+                listafinal.append(lista_temp_f)
+            
 
         unique_listaf = []
 

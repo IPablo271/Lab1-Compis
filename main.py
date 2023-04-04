@@ -34,8 +34,7 @@ while salir == False:
         afnresult.draw_graph() #Se dibuja el afn
 
     elif opc == "2":
-        # expresion = input("Ingrese la expresion regular: ")
-        expresion = "(a|b)*abb"
+        expresion = input("Ingrese la expresion regular: ")
         ift = InfixToPostfix(expresion) #Se crea la instacia del analizador 
         ift.validar_expresion_regular() #Se verifica que la expresion regular cumpla con los parametros
         ift.formatearExpresionRegular() #Se agregan puntos a la expersion
@@ -65,7 +64,7 @@ while salir == False:
         instancedirecta.construccion_directo()
         instancedirecta.draw_afd()
     elif opc == "4":
-        expresion = "(a|b)*abb"
+        expresion = input("Ingrese la expresion regular: ")
         ift = InfixToPostfix(expresion) #Se crea la instacia del analizador 
         ift.validar_expresion_regular() #Se verifica que la expresion regular cumpla con los parametros
         ift.formatearExpresionRegular() #Se agregan puntos a la expersion
@@ -79,8 +78,11 @@ while salir == False:
         afnresult.add_nodes_transiciones()
         instanceSubcojuntos = Subconjuntos(afnresult)
         instanceSubcojuntos.construccion_subconjuntos()
+        instanceSubcojuntos.draw_afd()
         instanceminimizacion = Minimizacion(instanceSubcojuntos)
         instanceminimizacion.minimizacion_afd()
+        instanceminimizacion.draw_afd_minimizado()
+
         
 
         

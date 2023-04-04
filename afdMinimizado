@@ -1,0 +1,10 @@
+digraph {
+	graph [rankdir=LR]
+	0
+	1
+	0 -> 1 [label=a arrowhead=vee dir=forward]
+	2
+	1 -> 2 [label=a arrowhead=vee dir=forward]
+	1 -> 1 [label=b arrowhead=vee dir=forward]
+	2 -> 2 [label=b arrowhead=vee dir=forward]
+}
