@@ -12,7 +12,7 @@ class InfixToPostfix:
         self.expression = expression
     
     def valid_construction_regex(self): #Metodo para verificar que la expresion no tenga una de estas diferentes combinaciones imbalidas.
-        invalid_combinations = ['**', '+*', '*+', '(|', '|)', '||', '(.', '.)', '..', '++', '.+', '+.', '(*', '(+', '??']
+        invalid_combinations = ['**', '+*', '*+', '(|', '|)', '||', '(.', '.)', '..', '.+', '+.', '(*', '(+', '??']
         #Check for invalid combinations
         for i in invalid_combinations:
             if i in self.expression:

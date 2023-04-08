@@ -1,0 +1,9 @@
+(* Definición de expresiones regulares comunes *)
+let digit = [0-9]
+let palabra = pablo
+
+(* Definición del punto de entrada y reglas *)
+rule lexer [input] =
+  'hola'        { TOK_HOLA }
+  | digit+'.'digit+ { TOK_FLOATCONST }
+  | palabra {Token_PABLO}

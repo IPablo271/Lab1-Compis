@@ -257,6 +257,10 @@ class Directa:
             for numero in sublista:
                 if isinstance(numero, int) and numero > maximo:
                     maximo = numero
+        
+        
+
+        
 
         self.nodos_no_finales_afd.remove(int(maximo))
 

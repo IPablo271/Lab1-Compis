@@ -1,12 +1,43 @@
 digraph {
 	graph [rankdir=LR]
-	2
+	16
+	6
+	16 -> 6 [label="ε" arrowhead=vee dir=forward]
+	14
+	16 -> 14 [label="ε" arrowhead=vee dir=forward]
+	4
+	6 -> 4 [label="ε" arrowhead=vee dir=forward]
 	0
-	2 -> 0 [label="ε" arrowhead=vee dir=forward]
+	4 -> 0 [label="ε" arrowhead=vee dir=forward]
+	2
+	4 -> 2 [label="ε" arrowhead=vee dir=forward]
 	1
 	0 -> 1 [label=a arrowhead=vee dir=forward]
 	3
-	1 -> 3 [label="ε" arrowhead=vee dir=forward]
-	1 -> 0 [label="ε" arrowhead=vee dir=forward]
-	2 -> 3 [label="ε" arrowhead=vee dir=forward]
+	2 -> 3 [label=b arrowhead=vee dir=forward]
+	5
+	1 -> 5 [label="ε" arrowhead=vee dir=forward]
+	3 -> 5 [label="ε" arrowhead=vee dir=forward]
+	5 -> 4 [label="ε" arrowhead=vee dir=forward]
+	7
+	5 -> 7 [label="ε" arrowhead=vee dir=forward]
+	12
+	14 -> 12 [label="ε" arrowhead=vee dir=forward]
+	8
+	12 -> 8 [label="ε" arrowhead=vee dir=forward]
+	10
+	12 -> 10 [label="ε" arrowhead=vee dir=forward]
+	9
+	8 -> 9 [label=a arrowhead=vee dir=forward]
+	11
+	10 -> 11 [label=c arrowhead=vee dir=forward]
+	13
+	9 -> 13 [label="ε" arrowhead=vee dir=forward]
+	11 -> 13 [label="ε" arrowhead=vee dir=forward]
+	13 -> 12 [label="ε" arrowhead=vee dir=forward]
+	15
+	13 -> 15 [label="ε" arrowhead=vee dir=forward]
+	17
+	7 -> 17 [label="ε" arrowhead=vee dir=forward]
+	15 -> 17 [label="ε" arrowhead=vee dir=forward]
 }

@@ -1,0 +1,11 @@
+(* Definición de expresiones regulares comunes *)
+
+rule gettoken = 
+    | [0-9]+ { print("int") }
+    | mas { print("PLUS")  }
+    | - { print("MINUS")  }
+    | @ { print("TIMES")  }
+    | / { print("DIV")  }
+    | p { print(LParen")  }
+    | a { print("RPAREN")  }
+    | eof { raise( 'Fin de buffer' )}

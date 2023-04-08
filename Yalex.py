@@ -1,4 +1,9 @@
 import re
+from Intp import *
+from directa import *
+from simulacionafd import *
+from Thompson import *
+from subconjuntos import *
 
 class Yalex:
     def __init__(self, filename):
@@ -8,17 +13,56 @@ class Yalex:
         self.regex_dict = {}
         self.identDict = {}
         self.regex_list = []
-        self.getRegexes()
         self.regexlist_final = []
         self.regexfinal = None
-        
-
+        self.megaregex = None
+         
     def _read_file(self):
         with open(self.filename, 'r') as file:
             lines = file.readlines()
         return lines
     
+    def check(self):
+        listaerrores = []
+        with open(self.filename, 'r') as file:
+            lines = file.readlines()
+        
+        for linea in lines:
+            #Manejo de errores para la cantidad de {}, (), []
+            if linea.count("{") - linea.count("}") != 0:
+                listaerrores.append("Eror en la cantidad de simbolos: {} estos deben de estar balanceados ")
+            if linea.count("(") - linea.count(")") != 0:
+                listaerrores.append("Eror en la cantidad de simbolos: () estos deben de estar balanceados ")
+            if linea.count("[") - linea.count("]") != 0:
+                listaerrores.append("Eror en la cantidad de simbolos: {} estos deben de estar balanceados ")
+            #Manejo de errores en el let 
+            if linea.startswith("let"):
+                if "=" not in linea.strip():
+                    listaerrores.append("Error existen lienas las cuales no tienen un igual")
+            if linea.startswith("(*"):
+                if linea.endswith("*)") != False:
+                    listaerrores.append("Error el comentario no se pudo procesar")
+        
+        if len(listaerrores) >  1:
+            print(listaerrores)
+            return listaerrores
+        else:
+            return listaerrores
+
+            
+
+
+
+
+
+    
     def getRegexes(self):
+        lista = self.check()
+        if len(lista) == 0:
+            pass
+        else:
+            raise MultipleErrorsException(lista)
+
 
         pattern = r"let\s+(\w+)\s*=\s*(.*)"
 
@@ -72,14 +116,14 @@ class Yalex:
 
         # print("\nDICCIONARIO IDENT - Identificacion de los tokens:")
         # print(self.identDict)
+        self.diccionario_val = self.identDict.copy()
+
+        
+        # print("\nEste es la lista con los regex: "+str(self.regex_list))
         
 
-        self.regex_list = [x.replace(' ', '') for x in self.regex_list]
-        print("\nPRIMERA LISTA - Regexes Originales:")
-        print(self.regex_list)
-        print("\nDICCIONARIO IDENT - Regexes Original")
-        print(self.identDict)
-
+        
+    
         for key in reversed(list(self.regex_dict.keys())):
             value = self.regex_dict[key]
             for inner_key, inner_value in self.regex_dict.items():
@@ -95,36 +139,81 @@ class Yalex:
                 list2 = self.regex_list[i].split(" ")
                 for j in range(len(list2)):
                     if key in list2[j]:
-                        list2[j] = list2[j].replace(key, self.regex_dict[key])
-        
-        for key, value in self.regex_dict.items():
-            self.regex_dict[key] = value.replace("'", "")  # Reemplazar todas las comillas dentro del valor
-        
-        for key, value in self.regex_dict.items():
-            if '.' in value:
-                self.regex_dict[key] = value.replace(".", ",") 
-        
-        
-        for key, value in self.regex_dict.items():
-            self.regex_dict[key] = re.sub(r'\[0-9\]', '(0|1|2|3|4|5|6|7|8|9)', self.regex_dict[key])
-            self.regex_dict[key] = re.sub(r'\[a-z\]', '(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)', self.regex_dict[key])
-            self.regex_dict[key] = re.sub(r"\[a-zA-Z\]", '(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)', self.regex_dict[key])
-            self.regex_dict[key] = re.sub(r'\[ \\t\\n\]', '( |\t|\n)', self.regex_dict[key])
-            
+                        list2[j] = list2[j].replace(key, self.regex_dict[key]) 
+                self.regex_list[i] = " ".join(list2)
         
 
-        lista = []
-        for key, value in self.regex_dict.items():
-            lista.append(value)
+        # print("Este es el regex list: "+str(self.regex_list))
+        
+        for i in range(len(self.regex_list)):
+            self.regex_list[i] = self.regex_list[i].replace("'","")
+            if '.' in self.regex_list[i]:
+                self.regex_list[i] = self.regex_list[i].replace(".",",")
+
+        
+           
+        # print("\nEste es el regex list con las comas remplazadas: "+str(self.regex_list))
+
+        for i in range(len(self.regex_list)):
+            self.regex_list[i] = re.sub(r'\[ \\t\\n\\r\]', '( |\t|\n|\r)', self.regex_list[i])
+            self.regex_list[i] = re.sub(r'\[0-9\]', '(0|1|2|3|4|5|6|7|8|9)', self.regex_list[i])
+            self.regex_list[i] = re.sub(r'\[a-z\]', '(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)', self.regex_list[i])
+            self.regex_list[i] = re.sub(r"\[a-zA-Z\]", '(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)',self.regex_list[i])
+            self.regex_list[i] = re.sub(r'\[ \\t\\n\]', '( |\t|\n)', self.regex_list[i])
+        
+        for i in range(len(self.regex_list)):
+            if '((' in self.regex_list[i]:
+                self.regex_list[i] = self.regex_list[i].replace('((','(')
+                self.regex_list[i] = self.regex_list[i].replace(')|', '|')
+
+
+        print("Esta es la lista final de regex: "+str(self.regex_list)+"\n")
+        
+        resultado = ""
+        for i in range(len(self.regex_list)):
+            resultado += self.regex_list[i]
+            if i != len(self.regex_list) - 1:
+                resultado += "|"
         
     
-        self.regexlist_final = lista
-        print(self.regexlist_final)
-        resultado = ""
-        for i in range(len(lista)):
-            resultado += lista[i]
-            if i != len(lista) - 1:
-                resultado += "|"
-
+        print("\nEste es el resultado "+resultado)
+        self.megaregex = resultado
+       
+        copiares = resultado
+        ift = InfixToPostfix(resultado) #Se crea la instacia del analizador 
+        ift.validar_expresion_regular() #Se verifica que la expresion regular cumpla con los parametros
+        ift.extension_cadena()
+        ift.formatearExpresionRegular() #Se agregan puntos a la expersion
+        ift.getExpression()
+        resultado = ift.infix_to_postfix()
         print(resultado)
+        instancedirecta = Directa(resultado)
+        instancedirecta.construccion_arbol()
+        instancedirecta.construccion_directo()
+        instancedirecta.draw_afd()
 
+        return copiares
+    
+    def simulacion_afd(self,regex):
+        cadena = input("Ingrese la cadena a simular: ")
+
+        ift = InfixToPostfix(regex) #Se crea la instacia del analizador 
+        ift.validar_expresion_regular() #Se verifica que la expresion regular cumpla con los parametros
+        ift.formatearExpresionRegular() #Se agregan puntos a la expersion
+        print(ift.expression)
+        result = ift.infix_to_postfix() #Se realiza el postfix de la cadena
+        
+        instanceThompson = Thompson(result) #Se crea la instacia de thompson con el resultado del postfix
+        afnresult = instanceThompson.postfix_to_nfa() #Se ejecuta el algoritmo de thompson
+        afnresult.transicionesToNum() #Se crea una lista de las transiciones para poder dibujar el afn
+        afnresult.add_nodes()
+        afnresult.add_nodes_transiciones()
+        instanceSubcojuntos = Subconjuntos(afnresult)
+        instanceSubcojuntos.construccion_subconjuntos()
+        instancesimulacionafd = SimulacionAfd(instanceSubcojuntos,cadena)
+        res = instancesimulacionafd.simulacion_afd()
+        print("El resultado de la simulacion por afd es : "+str(res))
+
+
+class MultipleErrorsException(Exception):
+    pass
