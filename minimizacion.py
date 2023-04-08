@@ -174,12 +174,12 @@ class Minimizacion:
         self.agregar_caracteres()
         self.particionnueva = self.ordenar_sublistas(self.primera_particion)
 
-        print("Esta es la primera particion: "+str(self.particionnueva))
+       
         
         while  self.comparar_listas(self.particionnueva,self.particion) != True:
             self.particion = self.particionnueva
             self.particionnueva = self.dividir_subgrupos(self.particionnueva)
-            print("Particion nueva en el while "+str(self.particionnueva))
+
             
 
         for i in range(len(self.particionnueva)):
@@ -198,7 +198,7 @@ class Minimizacion:
         
         self.diccionariofinal = dic
         transiciones_finales = []
-        print(self.afd)
+        
         for lista in self.particionnueva:
             for dato in self.datos:
                 listatemporal = []
@@ -213,7 +213,6 @@ class Minimizacion:
                     listatemporal.append(datotrans)
                     transiciones_finales.append(listatemporal)
 
-        print(transiciones_finales)
         self.afd_minimizado = transiciones_finales
         return transiciones_finales
             

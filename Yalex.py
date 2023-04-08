@@ -4,6 +4,7 @@ from directa import *
 from simulacionafd import *
 from Thompson import *
 from subconjuntos import *
+from minimizacion import *
 
 class Yalex:
     def __init__(self, filename):
@@ -38,7 +39,7 @@ class Yalex:
             #Manejo de errores en el let 
             if linea.startswith("let"):
                 if "=" not in linea.strip():
-                    listaerrores.append("Error existen lienas las cuales no tienen un igual")
+                    listaerrores.append("Error existene en linea de let, estas no cuentan con un igual")
             if linea.startswith("(*"):
                 if linea.endswith("*)") != False:
                     listaerrores.append("Error el comentario no se pudo procesar")
@@ -57,8 +58,7 @@ class Yalex:
             pass
         else:
             raise MultipleErrorsException(lista)
-
-
+        
         pattern = r"let\s+(\w+)\s*=\s*(.*)"
 
         for i, line in enumerate(self.lines):
@@ -67,27 +67,19 @@ class Yalex:
                 self.regex_dict[match.group(1)] = match.group(2)
             if line.startswith("rule"):
                 for j,sub_line in enumerate(self.lines[i+1:]):
-                      # Remove comments enclosed in '(**)'
-                    # sub_line = re.sub(r'\(\*.*?\*\)', '', sub_line)
                     sub_line = sub_line.lstrip()
 
                     if sub_line.startswith("(*") and re.search(r"\*\)$", sub_line):
-                        continue  # skip to next iteration if line is a comment
+                        continue 
                     
-                    # check if the line has curly braces '{}'
                     if "{" in sub_line and "}" in sub_line:
-                        # extract the content inside the curly braces
                         brace_content = re.search(r'\{(.+?)\}', sub_line).group(1)
-                        # use the content inside the braces as the key in the dictionary
                         self.identDict[brace_content] = ""
-                        # remove the content inside the braces from the line
                         sub_line = re.sub(r'\{.*?\}', '', sub_line)
                     
                     regex = ""
-                     # Remove comments enclosed in '(**)'
                     sub_line = re.sub(r'\(\*.*?\*\)', '', sub_line)
                     if j == 0:
-                        # Remove actions enclosed in '{}'
                         sub_line = re.sub(r'\{.*?\}', '', sub_line)
                         if sub_line.startswith("|"):
                             sub_line = sub_line[1:].lstrip()
@@ -98,26 +90,17 @@ class Yalex:
                             brace_content = None
                     else:
                         if sub_line.startswith("|"):
-                            # Remove actions enclosed in '{}'
                             sub_line = re.sub(r'\{.*?\}', '', sub_line)
                             regex += sub_line.strip()[1:]
                             self.regex_list.append(regex.strip())
-                            # print(f"Found regex: {regex}")
                             if brace_content:
                                 self.identDict[brace_content] = regex.strip()
                                 brace_content = None
                         else:
                             break
-
-        # print("\nDICCIONARIO IDENT - Identificacion de los tokens:")
-        # print(self.identDict)
         self.diccionario_val = self.identDict.copy()
-
         
-        # print("\nEste es la lista con los regex: "+str(self.regex_list))
-        
-
-        
+        # print("\nEste es la lista con los regex: "+str(self.regex_list))        
     
         for key in reversed(list(self.regex_dict.keys())):
             value = self.regex_dict[key]
@@ -175,16 +158,23 @@ class Yalex:
         self.megaregex = resultado
        
         copiares = resultado
-        ift = InfixToPostfix(resultado) #Se crea la instacia del analizador 
+        ift = InfixToPostfix(copiares) #Se crea la instacia del analizador 
         ift.validar_expresion_regular() #Se verifica que la expresion regular cumpla con los parametros
-        ift.extension_cadena()
         ift.formatearExpresionRegular() #Se agregan puntos a la expersion
-        ift.getExpression()
-        resultado = ift.infix_to_postfix()
-        instancedirecta = Directa(resultado)
-        instancedirecta.construccion_arbol()
-        instancedirecta.construccion_directo()
-        instancedirecta.draw_afd()
+        print(ift.expression)
+        result = ift.infix_to_postfix() #Se realiza el postfix de la cadena
+        print(result)
+        instanceThompson = Thompson(result) #Se crea la instacia de thompson con el resultado del postfix
+        afnresult = instanceThompson.postfix_to_nfa() #Se ejecuta el algoritmo de thompson
+        afnresult.transicionesToNum() #Se crea una lista de las transiciones para poder dibujar el afn
+        afnresult.add_nodes()
+        afnresult.add_nodes_transiciones()
+        instanceSubcojuntos = Subconjuntos(afnresult)
+        instanceSubcojuntos.construccion_subconjuntos()
+        instanceSubcojuntos.draw_afd()
+        instanceminimizacion = Minimizacion(instanceSubcojuntos)
+        instanceminimizacion.minimizacion_afd()
+        instanceminimizacion.draw_afd_minimizado()
 
         return copiares
     

@@ -6,6 +6,6 @@ rule gettoken =
     | - { print("MINUS")  }
     | @ { print("TIMES")  }
     | / { print("DIV")  }
-    | p { print(LParen")  }
-    | a { print("RPAREN")  }
+    | <= { print(LParen")  }
+    | => { print("RPAREN")  }
     | eof { raise( 'Fin de buffer' )}
