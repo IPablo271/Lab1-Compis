@@ -49,12 +49,7 @@ class Yalex:
         else:
             return listaerrores
 
-            
-
-
-
-
-
+    
     
     def getRegexes(self):
         lista = self.check()
@@ -167,7 +162,7 @@ class Yalex:
                 self.regex_list[i] = self.regex_list[i].replace(')|', '|')
 
 
-        print("Esta es la lista final de regex: "+str(self.regex_list)+"\n")
+        # print("Esta es la lista final de regex: "+str(self.regex_list)+"\n")
         
         resultado = ""
         for i in range(len(self.regex_list)):
@@ -176,7 +171,7 @@ class Yalex:
                 resultado += "|"
         
     
-        print("\nEste es el resultado "+resultado)
+        print("\nEste es el resultado del megaRegex "+resultado)
         self.megaregex = resultado
        
         copiares = resultado
@@ -186,7 +181,6 @@ class Yalex:
         ift.formatearExpresionRegular() #Se agregan puntos a la expersion
         ift.getExpression()
         resultado = ift.infix_to_postfix()
-        print(resultado)
         instancedirecta = Directa(resultado)
         instancedirecta.construccion_arbol()
         instancedirecta.construccion_directo()
@@ -200,7 +194,6 @@ class Yalex:
         ift = InfixToPostfix(regex) #Se crea la instacia del analizador 
         ift.validar_expresion_regular() #Se verifica que la expresion regular cumpla con los parametros
         ift.formatearExpresionRegular() #Se agregan puntos a la expersion
-        print(ift.expression)
         result = ift.infix_to_postfix() #Se realiza el postfix de la cadena
         
         instanceThompson = Thompson(result) #Se crea la instacia de thompson con el resultado del postfix
