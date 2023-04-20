@@ -2,7 +2,7 @@
 let digit = [0-9]
 let letter = [a-zA-Z]
 let whitespace = [ \t\n\r]
-let alphanumeric = [letter|digit]
+let alphanumeric = letter | digit
 
 (* Definición del punto de entrada y reglas *)
 rule lexer [input] =
@@ -18,7 +18,8 @@ rule lexer [input] =
   | 'bool'      { TOK_BOOL }
   | 'true'      { TOK_TRUE }
   | 'false'     { TOK_FALSE }
-  | digit+'.'digit+ { TOK_FLOATCONST }
+  | '='     { TOK_EQUAL }
+  | digit+ '.' digit+ { TOK_FLOATCONST }
   | digit+         { TOK_INTCONST }
-  | letter(alphanumeric|'_')* { TOK_IDENT }
+  | letter (alphanumeric|'_')* { TOK_IDENT }
   | whitespace     { skip }

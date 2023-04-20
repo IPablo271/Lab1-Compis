@@ -1,6 +1,8 @@
 from Yalex import Yalex
 
-yalexInstance = Yalex('ejemplo2.yal')
+yalexInstance = Yalex('ejemplo3.yal')
 res = yalexInstance.getRegexes()
+yalexInstance.getafd()
+yalexInstance.devolverlisatokens()
 
-yalexInstance.simulacion_afd(res)
+#yalexInstance.simulacion_afd(res)

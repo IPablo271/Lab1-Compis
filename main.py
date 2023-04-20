@@ -52,7 +52,7 @@ while salir == False:
     
     elif opc == "3":
         expresion = input("Ingrese la expresion regular: ")
-        ift = InfixToPostfix("(a|b)+|(a|c)+") #Se crea la instacia del analizador 
+        ift = InfixToPostfix("(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)((a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z) | (0|1|2|3|4|5|6|7|8|9)|_)*") #Se crea la instacia del analizador 
         ift.validar_expresion_regular() #Se verifica que la expresion regular cumpla con los parametros
         ift.extension_cadena()
         ift.formatearExpresionRegular() #Se agregan puntos a la expersion
@@ -64,7 +64,7 @@ while salir == False:
         instancedirecta.construccion_directo()
         instancedirecta.draw_afd()
     elif opc == "4":
-        expresion = input("Ingrese la expresion regular: ")
+        expresion = "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)((a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z) | (0|1|2|3|4|5|6|7|8|9)|_)*"
         ift = InfixToPostfix(expresion) #Se crea la instacia del analizador 
         ift.validar_expresion_regular() #Se verifica que la expresion regular cumpla con los parametros
         ift.formatearExpresionRegular() #Se agregan puntos a la expersion
@@ -104,7 +104,7 @@ while salir == False:
         expresion = input("Ingrese la expresion regular: ")
         cadena = input("Ingrese la cadena a simular: ")
 
-        ift = InfixToPostfix(expresion) #Se crea la instacia del analizador 
+        ift = InfixToPostfix("((a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)|(0|1|2|3|4|5|6|7|8|9)|_)*") #Se crea la instacia del analizador 
         ift.validar_expresion_regular() #Se verifica que la expresion regular cumpla con los parametros
         ift.formatearExpresionRegular() #Se agregan puntos a la expersion
         print(ift.expression)

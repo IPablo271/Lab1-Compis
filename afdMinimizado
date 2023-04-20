@@ -2,53 +2,102 @@ digraph {
 	graph [rankdir=LR]
 	0
 	1
-	0 -> 1 [label=h arrowhead=vee dir=forward]
+	0 -> 1 [label=i arrowhead=vee dir=forward]
 	2
-	0 -> 2 [label=0 arrowhead=vee dir=forward]
-	0 -> 2 [label=1 arrowhead=vee dir=forward]
-	0 -> 2 [label=2 arrowhead=vee dir=forward]
-	0 -> 2 [label=3 arrowhead=vee dir=forward]
-	0 -> 2 [label=4 arrowhead=vee dir=forward]
-	0 -> 2 [label=5 arrowhead=vee dir=forward]
-	0 -> 2 [label=6 arrowhead=vee dir=forward]
-	0 -> 2 [label=7 arrowhead=vee dir=forward]
-	0 -> 2 [label=8 arrowhead=vee dir=forward]
-	0 -> 2 [label=9 arrowhead=vee dir=forward]
+	0 -> 2 [label=f arrowhead=vee dir=forward]
 	3
-	0 -> 3 [label=p arrowhead=vee dir=forward]
+	0 -> 3 [label=e arrowhead=vee dir=forward]
 	4
-	1 -> 4 [label=o arrowhead=vee dir=forward]
-	2 -> 2 [label=0 arrowhead=vee dir=forward]
-	2 -> 2 [label=1 arrowhead=vee dir=forward]
-	2 -> 2 [label=2 arrowhead=vee dir=forward]
-	2 -> 2 [label=3 arrowhead=vee dir=forward]
-	2 -> 2 [label=4 arrowhead=vee dir=forward]
-	2 -> 2 [label=5 arrowhead=vee dir=forward]
-	2 -> 2 [label=6 arrowhead=vee dir=forward]
-	2 -> 2 [label=7 arrowhead=vee dir=forward]
-	2 -> 2 [label=8 arrowhead=vee dir=forward]
-	2 -> 2 [label=9 arrowhead=vee dir=forward]
+	0 -> 4 [label=w arrowhead=vee dir=forward]
 	5
-	2 -> 5 [label="," arrowhead=vee dir=forward]
+	0 -> 5 [label=d arrowhead=vee dir=forward]
 	6
-	3 -> 6 [label=a arrowhead=vee dir=forward]
+	0 -> 6 [label=t arrowhead=vee dir=forward]
 	7
-	4 -> 7 [label=l arrowhead=vee dir=forward]
-	5 -> 5 [label=0 arrowhead=vee dir=forward]
-	5 -> 5 [label=1 arrowhead=vee dir=forward]
-	5 -> 5 [label=2 arrowhead=vee dir=forward]
-	5 -> 5 [label=3 arrowhead=vee dir=forward]
-	5 -> 5 [label=4 arrowhead=vee dir=forward]
-	5 -> 5 [label=5 arrowhead=vee dir=forward]
-	5 -> 5 [label=6 arrowhead=vee dir=forward]
-	5 -> 5 [label=7 arrowhead=vee dir=forward]
-	5 -> 5 [label=8 arrowhead=vee dir=forward]
-	5 -> 5 [label=9 arrowhead=vee dir=forward]
+	0 -> 7 [label=b arrowhead=vee dir=forward]
 	8
-	6 -> 8 [label=b arrowhead=vee dir=forward]
+	0 -> 8 [label=c arrowhead=vee dir=forward]
 	9
-	7 -> 9 [label=a arrowhead=vee dir=forward]
+	0 -> 9 [label=0 arrowhead=vee dir=forward]
+	0 -> 9 [label=1 arrowhead=vee dir=forward]
+	0 -> 9 [label=2 arrowhead=vee dir=forward]
+	0 -> 9 [label=3 arrowhead=vee dir=forward]
+	0 -> 9 [label=4 arrowhead=vee dir=forward]
+	0 -> 9 [label=5 arrowhead=vee dir=forward]
+	0 -> 9 [label=6 arrowhead=vee dir=forward]
+	0 -> 9 [label=7 arrowhead=vee dir=forward]
+	0 -> 9 [label=8 arrowhead=vee dir=forward]
+	0 -> 9 [label=9 arrowhead=vee dir=forward]
 	10
-	8 -> 10 [label=l arrowhead=vee dir=forward]
-	10 -> 9 [label=o arrowhead=vee dir=forward]
+	1 -> 10 [label=f arrowhead=vee dir=forward]
+	11
+	1 -> 11 [label=n arrowhead=vee dir=forward]
+	12
+	2 -> 12 [label=l arrowhead=vee dir=forward]
+	13
+	2 -> 13 [label=o arrowhead=vee dir=forward]
+	2 -> 3 [label=a arrowhead=vee dir=forward]
+	14
+	3 -> 14 [label=l arrowhead=vee dir=forward]
+	15
+	4 -> 15 [label=h arrowhead=vee dir=forward]
+	16
+	5 -> 16 [label=o arrowhead=vee dir=forward]
+	17
+	6 -> 17 [label=r arrowhead=vee dir=forward]
+	18
+	7 -> 18 [label=o arrowhead=vee dir=forward]
+	19
+	8 -> 19 [label=h arrowhead=vee dir=forward]
+	9 -> 9 [label=0 arrowhead=vee dir=forward]
+	9 -> 9 [label=1 arrowhead=vee dir=forward]
+	9 -> 9 [label=2 arrowhead=vee dir=forward]
+	9 -> 9 [label=3 arrowhead=vee dir=forward]
+	9 -> 9 [label=4 arrowhead=vee dir=forward]
+	9 -> 9 [label=5 arrowhead=vee dir=forward]
+	9 -> 9 [label=6 arrowhead=vee dir=forward]
+	9 -> 9 [label=7 arrowhead=vee dir=forward]
+	9 -> 9 [label=8 arrowhead=vee dir=forward]
+	9 -> 9 [label=9 arrowhead=vee dir=forward]
+	20
+	9 -> 20 [label="," arrowhead=vee dir=forward]
+	11 -> 10 [label=t arrowhead=vee dir=forward]
+	21
+	12 -> 21 [label=o arrowhead=vee dir=forward]
+	13 -> 10 [label=r arrowhead=vee dir=forward]
+	22
+	14 -> 22 [label=s arrowhead=vee dir=forward]
+	23
+	15 -> 23 [label=i arrowhead=vee dir=forward]
+	24
+	16 -> 24 [label=u arrowhead=vee dir=forward]
+	17 -> 22 [label=u arrowhead=vee dir=forward]
+	25
+	18 -> 25 [label=o arrowhead=vee dir=forward]
+	19 -> 13 [label=a arrowhead=vee dir=forward]
+	20 -> 20 [label=0 arrowhead=vee dir=forward]
+	20 -> 20 [label=1 arrowhead=vee dir=forward]
+	20 -> 20 [label=2 arrowhead=vee dir=forward]
+	20 -> 20 [label=3 arrowhead=vee dir=forward]
+	20 -> 20 [label=4 arrowhead=vee dir=forward]
+	20 -> 20 [label=5 arrowhead=vee dir=forward]
+	20 -> 20 [label=6 arrowhead=vee dir=forward]
+	20 -> 20 [label=7 arrowhead=vee dir=forward]
+	20 -> 20 [label=8 arrowhead=vee dir=forward]
+	20 -> 20 [label=9 arrowhead=vee dir=forward]
+	21 -> 11 [label=a arrowhead=vee dir=forward]
+	22 -> 10 [label=e arrowhead=vee dir=forward]
+	23 -> 22 [label=l arrowhead=vee dir=forward]
+	24 -> 23 [label=b arrowhead=vee dir=forward]
+	25 -> 10 [label=l arrowhead=vee dir=forward]
+	20 -> 20 [label=0 arrowhead=vee dir=forward]
+	20 -> 20 [label=1 arrowhead=vee dir=forward]
+	20 -> 20 [label=2 arrowhead=vee dir=forward]
+	20 -> 20 [label=3 arrowhead=vee dir=forward]
+	20 -> 20 [label=4 arrowhead=vee dir=forward]
+	20 -> 20 [label=5 arrowhead=vee dir=forward]
+	20 -> 20 [label=6 arrowhead=vee dir=forward]
+	20 -> 20 [label=7 arrowhead=vee dir=forward]
+	20 -> 20 [label=8 arrowhead=vee dir=forward]
+	20 -> 20 [label=9 arrowhead=vee dir=forward]
 }
