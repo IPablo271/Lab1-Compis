@@ -1,0 +1,55 @@
+from simulacionafd import *
+from prettytable import PrettyTable
+from Yalex import Yalex
+import re
+yalexInstance = Yalex('ejemplo3.yal')
+res = yalexInstance.getRegexes()
+yalexInstance.getafd()
+megaautomata = yalexInstance.megaregex
+dic_afd = yalexInstance.diccionario_afd
+def main():
+    listakeys = []
+    listavalues = []
+    txt = input("Ingrese el nombre del archivo: ")
+    with open(txt,'r') as archivo:
+            contenido = archivo.read()
+    palabras = re.findall(r'"(?:\.|[^"\]])*"|\S+',contenido)
+    for palabra in palabras:
+        if palabra == "+":
+            palabra = "!"
+        else:
+            pass
+    palabras_econtradas = []
+    for palabra in palabras:
+        for clave,valor in dic_afd.items():
+            simul = SimulacionAfd(valor,palabra)
+            res = simul.simulacion_afd()
+            if res == True:
+                listakeys.append(palabra)
+                listavalues.append(clave)
+                palabras_econtradas.append(palabra)
+                break
+    if palabras == palabras_econtradas:
+        print("Lista de Tokens")
+        tabla = PrettyTable()
+        tabla.field_names = ["Token", "Valor"]
+        for i in range(len(listakeys)):
+            key = listakeys[i]
+            value = listavalues[i]
+            tabla.add_row([key, value])
+        print(tabla)
+
+    else:
+        print('Se encontro un error de reconocimento de tokens')
+        lista1_set = set(palabras)
+        lista2_set = set(palabras_econtradas)
+
+        dif = lista1_set - lista2_set
+
+        resultado = list(dif)
+        
+        for i in range(len(resultado)):
+            print("El token "+resultado[i]+" No se pudo reconocer")
+if __name__ == "__main__":
+    main()
+        

@@ -138,6 +138,8 @@ class Yalex:
             self.regex_list[i] = self.regex_list[i].replace("'","")
             if '.' in self.regex_list[i]:
                 self.regex_list[i] = self.regex_list[i].replace(".",",")
+            if self.regex_list[i] =="+":
+                self.regex_list[i] = "!"
             
         # print("\nTERCERA LISTA - Regexes Con Tokens Reemplazados:")
         # print(self.regex_list)
@@ -147,8 +149,12 @@ class Yalex:
         for i in range(len(self.regex_list)):
             self.regex_list[i] = re.sub(r'\[ \\t\\n\\r\]', '( |\t|\n|\r)', self.regex_list[i])
             self.regex_list[i] = re.sub(r'\[0-9\]', '(0|1|2|3|4|5|6|7|8|9)', self.regex_list[i])
+            self.regex_list[i] = re.sub(r'\[0-4\]', '(0|1|2|3|4)', self.regex_list[i])
+            self.regex_list[i] = re.sub(r'\[5-9\]', '(5|6|7|8|9)', self.regex_list[i])
             self.regex_list[i] = re.sub(r'\[a-z\]', '(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)', self.regex_list[i])
             self.regex_list[i] = re.sub(r"\[a-zA-Z\]", '(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)',self.regex_list[i])
+            self.regex_list[i] = re.sub(r"\[a-fA-F\]", '(a|b|c|d|e|f|A|B|C|D|E|F)',self.regex_list[i])
+            self.regex_list[i] = re.sub(r'\[xX\]','(x|X)',self.regex_list[i])
             self.regex_list[i] = re.sub(r'\[ \\t\\n\]', '( |\t|\n)', self.regex_list[i])
         
         # print("\nCUARTA LISTA - Regexes Modificados:")
@@ -204,8 +210,6 @@ class Yalex:
     def getafd(self):
         llaves = list(self.identDict.keys())
 
-        print(llaves)
-
         for i in range(len(llaves)):
             regex = self.regex_list[i]
             valor = llaves[i]  
@@ -237,13 +241,7 @@ class Yalex:
                     diccionario_respuesta[palabra] = clave
                     palabras_econtradas.append(palabra)
                     break
-        
-
-
-        print(diccionario_respuesta)
-        print(palabras_econtradas)
-        print(palabras)
-        
+    
 
 
        
@@ -284,7 +282,66 @@ class Yalex:
 
             else:
                 break
+    def crear_y_escribir_archivo(self,outputName):
+        codigo = f'''from simulacionafd import *
+from prettytable import PrettyTable
+from Yalex import Yalex
+import re
+yalexInstance = Yalex('{self.filename}')
+res = yalexInstance.getRegexes()
+yalexInstance.getafd()
+megaautomata = yalexInstance.megaregex
+dic_afd = yalexInstance.diccionario_afd
+def main():
+    listakeys = []
+    listavalues = []
+    txt = input("Ingrese el nombre del archivo: ")
+    with open(txt,'r') as archivo:
+            contenido = archivo.read()
+    palabras = re.findall(r'"(?:\.|[^"\]])*"|\S+',contenido)
+    for palabra in palabras:
+        if palabra == "+":
+            palabra = "!"
+        else:
+            pass
+    palabras_econtradas = []
+    for palabra in palabras:
+        for clave,valor in dic_afd.items():
+            simul = SimulacionAfd(valor,palabra)
+            res = simul.simulacion_afd()
+            if res == True:
+                listakeys.append(palabra)
+                listavalues.append(clave)
+                palabras_econtradas.append(palabra)
+                break
+    if palabras == palabras_econtradas:
+        print("Lista de Tokens")
+        tabla = PrettyTable()
+        tabla.field_names = ["Token", "Valor"]
+        for i in range(len(listakeys)):
+            key = listakeys[i]
+            value = listavalues[i]
+            tabla.add_row([key, value])
+        print(tabla)
 
+    else:
+        print('Se encontro un error de reconocimento de tokens')
+        lista1_set = set(palabras)
+        lista2_set = set(palabras_econtradas)
+
+        dif = lista1_set - lista2_set
+
+        resultado = list(dif)
+        
+        for i in range(len(resultado)):
+            print("El token "+resultado[i]+" No se pudo reconocer")
+if __name__ == "__main__":
+    main()
+        '''
+        with open(outputName, 'w') as file:
+            file.write(f"{codigo}")
+        
+        
 
 class MultipleErrorsException(Exception):
     pass

@@ -1,9 +1,14 @@
 (* Definición de expresiones regulares comunes *)
 let digit = [0-9]
-let palabra = pablo
+let letter = [a-zA-Z]
+let whitespace = [ \t\n\r]
+let alphanumeric = letter | digit
 
 (* Definición del punto de entrada y reglas *)
 rule lexer [input] =
-  'hola'        { TOK_HOLA }
-  | digit+'.'digit+ { TOK_FLOATCONST }
-  | palabra {Token_PABLO}
+  'if'        { TOK_IF }
+  | 'while'     { TOK_WHILE }
+  | 'for'       { TOK_FOR }
+  | digit+ '.' digit+ { TOK_FLOATCONST }
+  | digit+         { TOK_INTCONST }
+  | letter (alphanumeric|'_')* { TOK_IDENT }

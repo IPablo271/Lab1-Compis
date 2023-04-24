@@ -1,11 +1,20 @@
 (* Definición de expresiones regulares comunes *)
+let digit = [0-9]
+let letter = [a-fA-F]
+let equis = [xX]
+let whitespace = [ \t\n\r]
+let alphanumeric = letter | digit
 
-rule gettoken = 
-    | [0-9]+ { print("int") }
-    | mas { print("PLUS")  }
-    | - { print("MINUS")  }
-    | @ { print("TIMES")  }
-    | / { print("DIV")  }
-    | <= { print(LParen")  }
-    | => { print("RPAREN")  }
-    | eof { raise( 'Fin de buffer' )}
+(* Definición del punto de entrada y reglas *)
+rule lexer [input] =
+  '+'        { TOK_SUMA }
+  | '-'      { TOK_MENOS }
+  | '/'     { TOK_DIVIDO }
+  | '@'        { TOK_MULTIPLICACION }
+  | '^'       { TOK_POTENCIA }
+  | '='     { TOK_EQUAL }
+  | digit+ '.' digit+ { TOK_FLOATCONST }
+  | digit+         { TOK_INTCONST }
+  | letter (alphanumeric|'_')* { TOK_IDENT }
+  | whitespace     { skip }
+  | (0equis)?(digit|letter)+ {TOK_HEXA}
