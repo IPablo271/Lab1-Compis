@@ -1,27 +1,25 @@
-/* Gramatica SLR: /*
-/* E -> E + T | T */
-/* T -> t * F | F */
+/* Non-SLR Grammar: */
+/* E -> E + E | T */
+/* T -> T * T | F */
 /* F -> ( E ) | id */
 
 %token ID
 %token PLUS
 %token TIMES
-%token LPAREN
-%token RPAREN
+%token LPAREN RPAREN
 %token WS
 IGNORE WS
 
 %%
-
 expression:
-    expression PLUS term
+    expression PLUS expression
     | term
 ;
 term:
-    term TIMES factor
+    term TIMES term
     | factor
 ;
 factor:
     LPAREN expression RPAREN
-    | ID
+    | ID
 ;

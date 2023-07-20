@@ -215,7 +215,8 @@ class Minimizacion:
 
         self.afd_minimizado = transiciones_finales
         return transiciones_finales
-            
+
+       
                 
                 
 
@@ -236,6 +237,7 @@ class Minimizacion:
             g.edge(str(src), str(dest), label=label, dir='forward', arrowhead='vee') 
         g.format = 'png'
         g.render('afdMinimizado')
+    
        
 
         

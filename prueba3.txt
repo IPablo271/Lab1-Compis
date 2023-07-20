@@ -1,4 +1,1 @@
-hola2xyz "Carlos 12737132" 1200 "126123 pabj"
-if 1500,25 holaxyz razxyz 35 forxyz "palbra en comillas"
-for ixyz inxyz rangexyz 10
-printxyz "Pablish 1212123"
+hola2xyz ! rangexyz @ Pablishxyz

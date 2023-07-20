@@ -209,7 +209,6 @@ class Yalex:
 
     def getafd(self):
         llaves = list(self.identDict.keys())
-
         for i in range(len(llaves)):
             regex = self.regex_list[i]
             valor = llaves[i]  
@@ -225,6 +224,7 @@ class Yalex:
             instanceSubcojuntos = Subconjuntos(afnresult)
             instanceSubcojuntos.construccion_subconjuntos()
             self.diccionario_afd[valor] = instanceSubcojuntos
+        return llaves
     
     def devolverlisatokens(self):
         with open("prueba.txt",'r') as archivo:

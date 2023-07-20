@@ -1,14 +1,20 @@
 (* Definición de expresiones regulares comunes *)
 let digit = [0-9]
-let letter = [a-zA-Z]
+let letter = [a-fA-F]
+let equis = [xX]
 let whitespace = [ \t\n\r]
 let alphanumeric = letter | digit
 
 (* Definición del punto de entrada y reglas *)
 rule lexer [input] =
-  'if'        { TOK_IF }
-  | 'while'     { TOK_WHILE }
-  | 'for'       { TOK_FOR }
+  '+'        {PLUS}
+  | '-'      { TOK_MENOS }
+  | '/'     { TOK_DIVIDO }
+  | '@'        {TIMES}
+  | '^'       { TOK_POTENCIA }
+  | '='     { TOK_EQUAL }
   | digit+ '.' digit+ { TOK_FLOATCONST }
   | digit+         { TOK_INTCONST }
-  | letter (alphanumeric|'_')* { TOK_IDENT }
+  | letter (alphanumeric|'_')* {ID}
+  | whitespace     { skip }
+  | (0equis)?(digit|letter)+ {TOK_HEXA}

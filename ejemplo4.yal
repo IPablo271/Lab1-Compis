@@ -11,4 +11,5 @@ rule lexer [input] =
   | letter (alphanumeric|'_')*xyz {ID}
   | 'LPAREN'     {RPAREN}
   | 'RIGHTPAREN'     {LPAREN}
-
+  | '/'     {DIV}
+  | '-'     {MINUS}

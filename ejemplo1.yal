@@ -7,14 +7,6 @@ let alphanumeric = letter | digit
 
 (* Definición del punto de entrada y reglas *)
 rule lexer [input] =
-  '+'        { TOK_SUMA }
-  | '-'      { TOK_MENOS }
-  | '/'     { TOK_DIVIDO }
-  | '@'        { TOK_MULTIPLICACION }
-  | '^'       { TOK_POTENCIA }
-  | '='     { TOK_EQUAL }
-  | digit+ '.' digit+ { TOK_FLOATCONST }
-  | digit+         { TOK_INTCONST }
-  | letter (alphanumeric|'_')* { TOK_IDENT }
-  | whitespace     { skip }
-  | (0equis)?(digit|letter)+ {TOK_HEXA}
+  '+'        {PLUS}
+  | '@'        {TIMES}
+  | letter (alphanumeric|'_')* {ID}
